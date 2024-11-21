@@ -137,6 +137,10 @@ module_param(dump_invalid_vmcs, bool, 0644);
 
 #define KVM_VMX_TSC_MULTIPLIER_MAX     0xffffffffffffffffULL
 
+#define MAX_EXIT_TYPES 64  // Adjust based on the number of different exit reasons
+static unsigned long exit_type_counters[MAX_EXIT_TYPES] = {0};
+static unsigned long total_exits_counter = 0;
+
 /* Guest_tsc -> host_tsc conversion requires 64-bit division.  */
 static int __read_mostly cpu_preemption_timer_multi;
 static bool __read_mostly enable_preemption_timer = 1;
@@ -6625,9 +6629,59 @@ unexpected_vmexit:
 	return 0;
 }
 
+static const char *exit_type_names[MAX_EXIT_TYPES] = {
+        [0]           = "handle_exception_nmi",
+        [1]      = "handle_external_interrupt",
+        [2]            = "handle_triple_fault",
+        [3]              = "init_signal",
+        [4]          = "startup_IPI",
+        [5]               = "I/O_SMI",
+        [6]               = "other_smi",
+        [7]                   = "interrupt_window",
+        [8]                = "nmi_window",
+        [9]               = "task_switch",
+        [10]        = "cupid",
+        [11]                     = "getsec",
+        [12]                    = "HLT",
+        [13]                  = "INVD",
+        [14]                   = "INVLPG",
+        [15]                  = "RDPMC",
+        [16]                 = "RDTSC",
+        [17]                = "RSM",
+        [18]                 = "VMCALL",
+        [19]                 = "VMCLEAR",
+        [20]                  = "VMLAUNCH",
+        [21]                = "VMPTRLD",
+        [22]                 = "VMPTRST",
+        [23]                   = "VMREAD",
+        
+};
+
+
 int vmx_handle_exit(struct kvm_vcpu *vcpu, fastpath_t exit_fastpath)
 {
+        unsigned long exit_reason;
 	int ret = __vmx_handle_exit(vcpu, exit_fastpath);
+
+        total_exits_counter++;
+
+        exit_reason = to_vmx(vcpu)->exit_reason.basic;
+
+        if (exit_reason < MAX_EXIT_TYPES)
+                  exit_type_counters[exit_reason]++;
+
+        if (total_exits_counter % 10000 == 0) {
+                  printk(KERN_INFO "=== KVM Exit Stats ===\n");
+                         for (int i = 0; i < MAX_EXIT_TYPES; i++) {
+                                  if (exit_type_counters[i] > 0) {
+                                          const char *exit_name = exit_type_names[i] ? exit_type_names[i] : "Unknown Exit Type";
+                                          printk(KERN_INFO "Exit Type %d (%s): %lu exits\n", i, exit_name, exit_type_counters[i]);
+
+                                }
+                        }
+          printk(KERN_INFO "======================\n");
+        }
+
 
 	/*
 	 * Exit to user space when bus lock detected to inform that there is
