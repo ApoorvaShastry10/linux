@@ -1,4 +1,4 @@
-Assignment 2
+# Assignment 2
 
 1. For each member in your team, provide 1 paragraph detailing what parts of the lab that member
 implemented / researched. (You may skip this question if you are doing the lab by yourself).
@@ -80,6 +80,43 @@ during a boot sequence.
 
 In my case, exit type 10(CPIID),  exit type 1(handle_external_interupt), exit type 30 and few others are frequent.
 Exit type 0(handle_expception_nmi), exit type 31, exit type 29, exit type 46 etc are least. Below attached is the
-screenshot of the sudo dmesg command.
+snippet of the sudo dmesg command.
 
+```
+[ 1339.317726] === KVM Exit Stats ===
+[ 1339.317734] Exit Type 0 (handle_exception_nmi): 9 exits
+[ 1339.317738] Exit Type 1 (handle_external_interrupt): 11257 exits
+[ 1339.317741] Exit Type 7 (interrupt_window): 5998 exits
+[ 1339.317744] Exit Type 10 (cupid): 20675 exits
+[ 1339.317746] Exit Type 12 (HLT): 3379 exits
+[ 1339.317747] Exit Type 28 (Unknown Exit Type): 6811 exits
+[ 1339.317749] Exit Type 29 (Unknown Exit Type): 1 exits
+[ 1339.317751] Exit Type 30 (Unknown Exit Type): 1663865 exits
+[ 1339.317753] Exit Type 31 (Unknown Exit Type): 291 exits
+[ 1339.317755] Exit Type 32 (Unknown Exit Type): 844 exits
+[ 1339.317756] Exit Type 46 (Unknown Exit Type): 1 exits
+[ 1339.317758] Exit Type 48 (Unknown Exit Type): 27479 exits
+[ 1339.317760] Exit Type 49 (Unknown Exit Type): 1301 exits
+[ 1339.317762] Exit Type 52 (Unknown Exit Type): 8085 exits
+[ 1339.317764] Exit Type 54 (Unknown Exit Type): 2 exits
+[ 1339.317766] Exit Type 55 (Unknown Exit Type): 2 exits
+[ 1339.317767] ======================
+[ 1341.458025] === KVM Exit Stats ===
+[ 1341.458033] Exit Type 0 (handle_exception_nmi): 9 exits
+[ 1341.458037] Exit Type 1 (handle_external_interrupt): 11484 exits
+[ 1341.458039] Exit Type 7 (interrupt_window): 6255 exits
+[ 1341.458040] Exit Type 10 (cupid): 22091 exits
+[ 1341.458041] Exit Type 12 (HLT): 3604 exits
+[ 1341.458042] Exit Type 28 (Unknown Exit Type): 6811 exits
+[ 1341.458044] Exit Type 29 (Unknown Exit Type): 1 exits
+[ 1341.458045] Exit Type 30 (Unknown Exit Type): 1671559 exits
+[ 1341.458046] Exit Type 31 (Unknown Exit Type): 293 exits
+[ 1341.458047] Exit Type 32 (Unknown Exit Type): 881 exits
+[ 1341.458048] Exit Type 46 (Unknown Exit Type): 1 exits
+[ 1341.458049] Exit Type 48 (Unknown Exit Type): 27481 exits
+[ 1341.458050] Exit Type 49 (Unknown Exit Type): 1301 exits
+[ 1341.458051] Exit Type 52 (Unknown Exit Type): 8225 exits
+[ 1341.458052] Exit Type 54 (Unknown Exit Type): 2 exits
+[ 1341.458053] Exit Type 55 (Unknown Exit Type): 2 exits
+```
 
