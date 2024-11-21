@@ -104,7 +104,7 @@ during a boot sequence.
 
 4. Of the exit types, which are the most frequent? Least?
 
-In my case, exit type 10(CPIID),  exit type 1(handle_external_interupt), exit type 30 and few others are frequent.
+In my case, exit type 10(CPUID),  exit type 1(handle_external_interupt), exit type 30 and few others are frequent.
 Exit type 0(handle_expception_nmi), exit type 31, exit type 29, exit type 46 etc are least. Below attached is the
 output snippet of the sudo dmesg command.
 
