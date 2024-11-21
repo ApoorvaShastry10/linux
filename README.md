@@ -80,7 +80,7 @@ during a boot sequence.
 
 In my case, exit type 10(CPIID),  exit type 1(handle_external_interupt), exit type 30 and few others are frequent.
 Exit type 0(handle_expception_nmi), exit type 31, exit type 29, exit type 46 etc are least. Below attached is the
-snippet of the sudo dmesg command.
+output snippet of the sudo dmesg command.
 
 ```
 [ 1339.317726] === KVM Exit Stats ===
