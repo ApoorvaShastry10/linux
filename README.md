@@ -13,56 +13,82 @@ question will be recipes that someone can follow to reproduce your development s
 Steps:
 1. Fork the linux git repository (Repo - https://github.com/torvalds/linux )
 
-2. Connect to the outer-vm - gcloud compute ssh outer-vm
+2. Connect to the outer-vm -
+
+ 	gcloud compute ssh outer-vm
 
 3. Clone the forked linux git repository inside the outer-vm:
-git clone https://github.com/ApoorvaShastry10/linux.git
+
+	git clone https://github.com/ApoorvaShastry10/linux.git
 
 4. Go into the linux directory by cd command:
+
 	cd linux
 
 5.  Install necessary kernel packages:
-sudo apt-get install build-essential libncurses-dev flex bison libssl-dev libelf-dev zstd
+
+	sudo apt-get install build-essential libncurses-dev flex bison libssl-dev libelf-dev zstd
 
 6. Configuring linux kernel build:
+
 	sudo make menuconfig
 
 7. Building the kernel without installing it yet:
+
 	sudo make -j$(nproc)
+
 	sudo make modules
+
 	sudo make modules_install
+
 
 8. Taking the snapshot: in the left nav bar in the snapshot section, a snapshot is created by choosing the appropriate
 disk from the option for which a snapshot has to be created.
 
 9. Install the kernel which was built in step 7 and build initramfs:
+
 	sudo make install
+
 	mkinitramfs -o /boot/initrd.img-$(uname -r)
 
+
 10. Reboot the outer-vm:
+
 	sudo reboot
 
 11. Edit the /arch/x86/kvm/vmx/vmx.c file 
 
 12. After making the necessary changes kernel needs to be re-built and installed:
+
 	sudo make -j$(nproc)
+
 	sudo make modules
+
 	sudo make modules_install
+
 	sudo make install
+
 
 13. Reboot the outer-vm
 	sudo reboot
 
 14. Check the latest version after rebuilding the kernel
+
 	uname -r
 
 15. Boot the inner-vm in a separate tab or in a screen:
+
 	screen -S s1
+
       If inner-vm is created using virt-install, it can booted just by starting it
+
 	sudo virsh start inner-vm
+
 	sudo virsh console inner-vm
 
+
 16. To check the print statements in outer-vm:
+
 	sudo dmesg
 
 
